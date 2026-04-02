@@ -1,0 +1,51 @@
+{%block css_adicional%}
+<link rel="stylesheet" href="../static/src/css/detalhes.css">
+{%endblock%}
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+<main class="page-details">
+    <div class="details-container">
+        
+        <section class="main-info">
+            
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg" alt="Classic Dev">
+                </div>
+            </div>
+
+            <div class="product-buy-box">
+                <h1 class="product-title">Classic Dev Burger - Artesanal 180g</h1>
+                <p class="product-seller">Vendido e entregue por <strong>DevBurger</strong></p>
+                
+                <div class="price-section">
+                    <span class="price-value">R$ 25,00</span>
+                    <p class="installments">Em até 3x no cartão</p>
+                </div>
+
+                <div class="shipping-info">
+                    <span class="material-symbols-outlined">delivery_dining</span>
+                    <p>Entrega rápida na sua região</p>
+                </div>
+
+                <button class="btn-buy-now">Comprar</button>
+            </div>
+        </section>
+
+        <section class="product-description-section">
+            <h2 class="description-title">Descrição do produto</h2>
+            <div class="description-content">
+                <p>
+                    O Classic Dev é a nossa obra-prima para quem busca o sabor tradicional do hambúrguer artesanal. 
+                    Feito com um blend exclusivo de carne bovina premium de 180g, queijo cheddar derretido de alta qualidade, 
+                    alface americana sempre fresca e tomates selecionados, tudo isso dentro de um pão brioche macio e amanteigado. 
+                    Acompanha nossa maionese especial da casa.
+                </p>
+            </div>
+        </section>
+
+    </div>
+</main>
+{% endblock %}  
