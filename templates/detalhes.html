@@ -12,16 +12,16 @@
             
             <div class="product-gallery">
                 <div class="main-image">
-                    <img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg" alt="Classic Dev">
+                    <img src="{{produto.foto}}" alt="Classic Dev">
                 </div>
             </div>
-
+            
             <div class="product-buy-box">
-                <h1 class="product-title">Classic Dev Burger - Artesanal 180g</h1>
+                <h1 class="product-title">{{produto.produto}}</h1>
                 <p class="product-seller">Vendido e entregue por <strong>DevBurger</strong></p>
                 
                 <div class="price-section">
-                    <span class="price-value">R$ 25,00</span>
+                    <span class="price-value">R${{produto.preco}}</span>
                     <p class="installments">Em até 3x no cartão</p>
                 </div>
 
@@ -38,10 +38,7 @@
             <h2 class="description-title">Descrição do produto</h2>
             <div class="description-content">
                 <p>
-                    O Classic Dev é a nossa obra-prima para quem busca o sabor tradicional do hambúrguer artesanal. 
-                    Feito com um blend exclusivo de carne bovina premium de 180g, queijo cheddar derretido de alta qualidade, 
-                    alface americana sempre fresca e tomates selecionados, tudo isso dentro de um pão brioche macio e amanteigado. 
-                    Acompanha nossa maionese especial da casa.
+                    {{produto.descricao}}
                 </p>
             </div>
         </section>

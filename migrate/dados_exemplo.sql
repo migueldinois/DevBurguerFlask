@@ -1,2 +1,4 @@
-INSERT INTO produtos(produto, descricao, preco, destaque, foto, disponibilidade)
-VALUES("Duck Burguer", "Um hamburguer feito por patos!", 24.00, 1, "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg", 1 )
+INSERT INTO produtos (produto, descricao, preco, destaque, foto, disponibilidade) VALUES
+('Classic Cheese', 'Pão brioche, carne 180g e muito queijo cheddar derretido.', 22.00, 1, 'https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg', 1),
+('Bacon Blast', 'Hambúrguer bovino com fatias crocantes de bacon e molho barbecue.', 28.50, 1, 'https://images.pexels.com/photos/1251198/pexels-photo-1251198.jpeg', 1),
+('Veggie Green', 'Hambúrguer de grão-de-bico com maionese de ervas e alface fresca.', 26.00, 0, 'https://images.pexels.com/photos/3607284/pexels-photo-3607284.jpeg', 1);

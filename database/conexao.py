@@ -7,7 +7,7 @@ class Conexao():
             port="3306",
             user="root",
             password="root",
-            database="devburguer"
+            database="DevBurguer"
         )
         cursor = conexao.cursor(dictionary=True)
         return conexao, cursor

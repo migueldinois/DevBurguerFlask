@@ -6,11 +6,13 @@ app = Flask(__name__)
 @app.route('/')
 def pagina_principal():
     produtos = Produtos.recuperar_produtos()
-    return render_template("index.html", produtos = produtos)
+    destaques = Produtos.recuperar_destaques()
+    return render_template("index.html", produtos = produtos, destaques = destaques)
 
 @app.route('/detalhes_produto/<codigo>')
-def layout():
-    return render_template("detalhes.html")
+def layout(codigo):
+    produto = Produtos.detalhes_produto(codigo)
+    return render_template("detalhes.html", produto = produto)
 
 
 
