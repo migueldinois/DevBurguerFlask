@@ -1,5 +1,4 @@
 from database.conexao import Conexao
-import hashlib
 
 class Usuarios():
     def cadastrar_usuario(nome, usuario, senha):
@@ -15,7 +14,7 @@ class Usuarios():
             return False
         
 
-    def verificar_usuario(usuario, senha):
+    def verificar_usuario(usuario):
         try:
             conexao, cursor = Conexao.conectar()
 

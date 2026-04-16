@@ -37,7 +37,11 @@ def cadastrar_usuario():
 def logar():
     input_email = request.form.get("email")
     input_senha = request.form.get("senha")
-    
+    if Usuarios.verificar_usuario(input_email):
+        session["usuario"] = input_email
+        return redirect("/")
+    else:
+        print("usuario nao encontradp")
 
     
 
