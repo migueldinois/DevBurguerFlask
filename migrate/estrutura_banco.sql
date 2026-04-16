@@ -11,9 +11,10 @@
         disponibilidade bool default 1
     );
 
-   CREATE TABLE IF NOT EXISTS usuarios (
-        codigo int AUTO_INCREMENT ,
-        nome varchar(60) NOT NULL,
-        usuario varchar(32) NOT NULL PRIMARY KEY,
-        senha varchar(60) NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS usuarios (
+    codigo INT AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    usuario VARCHAR(32) NOT NULL PRIMARY KEY,
+    senha VARCHAR(60) NOT NULL,
+    UNIQUE KEY (codigo)
+);

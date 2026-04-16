@@ -13,6 +13,22 @@ class Usuarios():
         except Exception as erro:
             print(erro)
             return False
+        
+
+    def verificar_usuario(usuario, senha):
+        try:
+            conexao, cursor = Conexao.conectar()
+
+            cursor.execute("""SELECT usuario, senha from usuarios where usuario = %s""", [usuario])
+            usuario = cursor.fetchone()
+            conexao.commit()
+            conexao.close()
+            return True
+        
+        except Exception as erro:
+            print(erro)
+            return False
+
 
 
 

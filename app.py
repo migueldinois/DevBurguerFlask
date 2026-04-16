@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from model.produtos import Produtos
 from model.usuarios import Usuarios
 
 
 app = Flask(__name__)
+app.secret_key = '777'
 
 @app.route('/')
 def pagina_principal():
@@ -18,17 +19,27 @@ def layout(codigo):
 
 @app.route('/login')
 def login_pagina():
-    return render_template("login.html")
+    if "usuario" in session:
+        return redirect("/")
+    else:
+        return render_template("login.html")
 
 @app.route('/cadastrar_usuario', methods=['POST'])
 def cadastrar_usuario():
     input_nome = request.form.get("nome")
     input_email = request.form.get("email")
     input_senha = request.form.get("senha")
-    if Usuarios.cadastrar_usuario(input_nome, input_email, input_senha):
-        return redirect("/login")
+    usuario_logado = Usuarios.cadastrar_usuario(input_nome, input_email, input_senha)
+    session["usuario"] = input_nome
+    return redirect("/login")
 
+@app.route('/logar', methods=['POST'])
+def logar():
+    input_email = request.form.get("email")
+    input_senha = request.form.get("senha")
+    
 
+    
 
 
 if __name__ == '__main__':
