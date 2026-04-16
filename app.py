@@ -1,5 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from model.produtos import Produtos
+from model.usuarios import Usuarios
+
 
 app = Flask(__name__)
 
@@ -13,6 +15,19 @@ def pagina_principal():
 def layout(codigo):
     produto = Produtos.detalhes_produto(codigo)
     return render_template("detalhes.html", produto = produto)
+
+@app.route('/login')
+def login_pagina():
+    return render_template("login.html")
+
+@app.route('/cadastrar_usuario', methods=['POST'])
+def cadastrar_usuario():
+    input_nome = request.form.get("nome")
+    input_email = request.form.get("email")
+    input_senha = request.form.get("senha")
+    if Usuarios.cadastrar_usuario(input_nome, input_email, input_senha):
+        return redirect("/login")
+
 
 
 

@@ -10,3 +10,10 @@
         foto varchar(256),
         disponibilidade bool default 1
     );
+
+   CREATE TABLE IF NOT EXISTS usuarios (
+        codigo int AUTO_INCREMENT ,
+        nome varchar(60) NOT NULL,
+        usuario varchar(32) NOT NULL PRIMARY KEY,
+        senha varchar(60) NOT NULL
+    );

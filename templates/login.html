@@ -1,0 +1,43 @@
+
+{%block css_adicional%}
+<link rel="stylesheet" href="../static/src/css/login.css">
+{%endblock%}
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<div class="auth-container">
+    <div class="auth-box">
+
+        <!-- LOGIN -->
+        <div class="auth-side login">
+            <div class="logo">🍔 Dev Burguer</div>
+            <h2>Login</h2>
+
+            <form method="POST" action="/login">
+                <input type="email" name="email" placeholder="E-mail" required>
+                <input type="password" name="senha" placeholder="Senha" required>
+
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+        <!-- CADASTRO -->
+        <div class="auth-side cadastro">
+            <div class="logo">Dev Burguer</div>
+            <h2>Cadastro</h2>
+
+            <form method="POST" action="/cadastrar_usuario">
+                <input type="text" name="nome" placeholder="Nome" required>
+                <input type="email" name="email" placeholder="E-mail" required>
+                <input type="password" name="senha" placeholder="Senha" required>
+
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
