@@ -1,0 +1,2 @@
+INSERT INTO produtos(produto, descricao, preco, destaque, foto, disponibilidade)
+VALUES("Duck Burguer", "Um hamburguer feito por patos!", 24.00, 1, "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg", 1 )

@@ -1,11 +1,12 @@
 from flask import Flask, render_template
-
+from model.produtos import Produtos
 
 app = Flask(__name__)
 
 @app.route('/')
 def pagina_principal():
-    return render_template("index.html")
+    produtos = Produtos.recuperar_produtos()
+    return render_template("index.html", produtos = produtos)
 
 @app.route('/detalhes_produto/<codigo>')
 def layout():
