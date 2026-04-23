@@ -39,16 +39,25 @@ async function mostrar_carrinho() {
 
     carrinho.innerHTML = "";
 
+    let total = 0;
+
     for (let item of dadosCarrinho) {
+      total += item.preco;
       let linha = `
-      <div class="cart-item">
-          <img src="../static/img/burger1.jpg" alt="Hambúrguer Clássico" class="cart-item__img" />
-          <div class="cart-item__details">
-            <h3 class="cart-item__name">Hambúrguer Clássico</h3>
-            <p class="cart-item__price">R$ 19.90</p>
-          </div>
-          <button class="cart-item__remove">Remover</button>
-        </div>`
+          <div class="cart-item">
+            <img src="${item.imagem}" alt="${item.nome}" class="cart-item__img" />
+
+            <div class="cart-item__content">
+              <h3 class="cart-item__name">${item.nome}</h3>
+              <p class="cart-item__price">R$ ${item.preco.toFixed(2)}</p>
+            </div>
+
+            <button class="cart-item__remove" aria-label="Remover ${item.nome}">
+              ✕
+            </button>
+          </div>`
+          // Atualizando total (tofixed para arredonda para dois numeros dps da virgula))
+          document.querySelector("#cart-total").innerText = total.toFixed(2);
 
       carrinho.innerHTML += linha;
 
@@ -56,3 +65,4 @@ async function mostrar_carrinho() {
   }
 }
 
+mostrar_carrinho();
