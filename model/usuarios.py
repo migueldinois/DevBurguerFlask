@@ -13,17 +13,18 @@ class Usuarios():
             print(erro)
             return False
         
-
-    def verificar_usuario(usuario):
+    @staticmethod
+    def verificar_usuario(usuario:str, senha:str) -> dict:
         try:
             conexao, cursor = Conexao.conectar()
 
-            cursor.execute("""SELECT usuario, senha from usuarios where usuario = %s""", [usuario])
+            cursor.execute("""SELECT * from usuarios where usuario = %s AND senha = %s""", [usuario, senha])
             usuario = cursor.fetchone()
             conexao.commit()
             conexao.close()
-            return True
-        
+            return usuario
+
+
         except Exception as erro:
             print(erro)
             return False

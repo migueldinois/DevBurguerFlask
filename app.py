@@ -37,14 +37,15 @@ def cadastrar_usuario():
 def logar():
     input_email = request.form.get("email")
     input_senha = request.form.get("senha")
-    if Usuarios.verificar_usuario(input_email):
-        session["usuario"] = input_email
+
+    resposta = Usuarios.verificar_usuario(input_email, input_senha)
+    print(resposta)
+    if resposta != None:
+        session["usuario"] = resposta["nome"]
         return redirect("/")
     else:
-        print("usuario nao encontradp")
-
-    
-
+        print("Usuario ou senha incorretos")
+        return redirect("/login")
 
 if __name__ == '__main__':
     app.run(debug=True) 
