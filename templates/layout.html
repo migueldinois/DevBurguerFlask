@@ -209,7 +209,9 @@
         <button id="close-cart">✖</button>
       </div>
 
-      <div class="cart__items" id="cart-items"></div>
+      <div class="cart__items" id="cart-items">
+
+      </div>
 
       <div class="cart__footer">
         <p>Total: R$ <span id="cart-total">0.00</span></p>
@@ -223,38 +225,6 @@
         DevBurger © 2025. Todos os direitos reservados.
       </p>
     </footer>
-
-    <!-- JS -->
-    <script>
-      const cart = document.getElementById("cart");
-      const openBtn = document.getElementById("cart-button");
-      const closeBtn = document.getElementById("close-cart");
-
-      let total = 0;
-
-      openBtn.addEventListener("click", () => {
-        cart.classList.add("active");
-      });
-
-      closeBtn.addEventListener("click", () => {
-        cart.classList.remove("active");
-      });
-
-      function addToCart(nome, preco) {
-        const cartItems = document.getElementById("cart-items");
-        const cartTotal = document.getElementById("cart-total");
-
-        const item = document.createElement("div");
-        item.innerHTML = `<p>${nome} - R$ ${preco}</p>`;
-
-        cartItems.appendChild(item);
-
-        total += preco;
-        cartTotal.innerText = total.toFixed(2);
-
-        cart.classList.add("active");
-      }
-    </script>
-
+    <script src="../static/src/js/carrinho.js"></script>
   </body>
 </html>
