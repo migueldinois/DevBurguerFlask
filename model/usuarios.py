@@ -18,7 +18,7 @@ class Usuarios():
         try:
             conexao, cursor = Conexao.conectar()
 
-            cursor.execute("""SELECT * from usuarios where usuario = %s AND senha = %s""", [usuario, senha])
+            cursor.execute("""SELECT nome, usuario from usuarios where usuario = %s AND senha = %s""", [usuario, senha])
             usuario = cursor.fetchone()
             conexao.commit()
             conexao.close()

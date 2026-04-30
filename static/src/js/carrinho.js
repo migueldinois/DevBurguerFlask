@@ -29,7 +29,10 @@ function addToCart(nome, preco) {
 
 
 async function mostrar_carrinho() {
-  const resposta = await fetch("http://10.110.134.2:8080/api/get/carrinho");
+
+  
+  const resposta = await fetch("/api/get/carrinho");
+
 
   if (!resposta.ok) {
     alert("Erro ao obter o carrinho:");
@@ -45,14 +48,14 @@ async function mostrar_carrinho() {
       total += item.preco;
       let linha = `
           <div class="cart-item">
-            <img src="${item.imagem}" alt="${item.nome}" class="cart-item__img" />
+            <img src="${item.foto}" alt="${item.produto}" class="cart-item__img" />
 
             <div class="cart-item__content">
-              <h3 class="cart-item__name">${item.nome}</h3>
+              <h3 class="cart-item__name">${item.produto}</h3>
               <p class="cart-item__price">R$ ${item.preco.toFixed(2)}</p>
             </div>
 
-            <button class="cart-item__remove" aria-label="Remover ${item.nome}">
+            <button class="cart-item__remove" aria-label="Remover ${item.produto}">
               ✕
             </button>
           </div>`

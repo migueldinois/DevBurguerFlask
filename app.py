@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from model.produtos import Produtos
 from model.usuarios import Usuarios
+from model.carrinho import Carrinho
 
 
 app = Flask(__name__)
@@ -30,7 +31,7 @@ def cadastrar_usuario():
     input_email = request.form.get("email")
     input_senha = request.form.get("senha")
     usuario_logado = Usuarios.cadastrar_usuario(input_nome, input_email, input_senha)
-    session["usuario"] = input_nome
+    session["usuario_logado"] = usuario_logado
     return redirect("/login")
 
 @app.route('/logar', methods=['POST'])
@@ -41,11 +42,38 @@ def logar():
     resposta = Usuarios.verificar_usuario(input_email, input_senha)
     print(resposta)
     if resposta != None:
-        session["usuario"] = resposta["nome"]
+        session["usuario_logado"] = resposta
         return redirect("/")
     else:
         print("Usuario ou senha incorretos")
         return redirect("/login")
+    
+@app.route("/api/get/carrinho", methods =["GET"])
+def api_get_carrinho():
+    if "usuario_logado" in session:
+
+        login = session["usuario_logado"]["usuario"]
+
+        carrinho = Carrinho.recuperar_carrinho(login)
+        return jsonify(carrinho), 200
+    else:
+        return jsonify({"error": "Usuário não logado"}), 401
+    
+
+@app.route("/api/post/carrinho/<cod_produto>/<cod_carrinho>/<quantidade>")
+def api_adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
+    if "usuario_logado" in session:
+        login = session["usuario_logado"]["usuario"]
+        if Carrinho.verificar_carrinho_existente(cod_carrinho):
+            if Carrinho.adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
+                print("Deu certo para adicionar item")
+                return redirect("/")
+        else:
+            if Carrinho.criar_carrinho_novo(login):
+                print("Deu certo para criar carrinho")
+                return redirect("/")
+        
+
 
 if __name__ == '__main__':
     app.run(debug=True) 
