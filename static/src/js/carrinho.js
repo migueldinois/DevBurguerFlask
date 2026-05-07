@@ -1,6 +1,8 @@
 const cart = document.getElementById("cart");
 const openBtn = document.getElementById("cart-button");
+const butButton = document.querySelector('.btn-buy-now')
 const closeBtn = document.getElementById("close-cart");
+const euQueroBotao = document.querySelector('.button--small')
 
 let total = 0;
 
@@ -67,5 +69,33 @@ async function mostrar_carrinho() {
     }
   }
 }
+
+async function adicionarItemCarrinho(cod_produto, quantidade){
+  const resposta = await fetch('/api/post/carrinho', 
+                        {
+                          method: "POST",
+                          headers:{
+                                      "Content-Type": "application/json"
+                          },
+                          body: JSON.stringify(
+
+                                                {
+                                                  "cod_produto": cod_produto,
+                                                  "quantidade": quantidade
+                                                }
+                          )
+                        }
+  )
+
+  if(!resposta.ok){
+    alert("Erro ao adicionar item no carrinho")
+  } else {
+
+      
+  }
+}
+euQueroBotao.addEventListener('click', () =>{
+
+})
 
 mostrar_carrinho();

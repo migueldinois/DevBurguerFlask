@@ -74,7 +74,8 @@ def api_adicionar_item_carrinho():
             
         # Aidiconando
         if cod_carrinho and Carrinho.adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
-            return redirect("/")
+            
+            return jsonify({"message":"Inserido com sucesso"}), 201
         
         return "Erro ao processar carrinho", 500
     else:
