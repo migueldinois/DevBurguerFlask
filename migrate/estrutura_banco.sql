@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 CREATE TABLE IF NOT EXISTS carrinhos (
 	cod_carrinho INT AUTO_INCREMENT PRIMARY KEY,
-    usuario VARCHAR(20),
+    usuario VARCHAR(32),
     data datetime default current_timestamp,
     finalizado bool,
     constraint fk_carrinho_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario)

@@ -1,42 +1,29 @@
 from database.conexao import Conexao
 
-
 class Carrinho():
-    def recuperar_carrinho( usuario:str )-> list:
-
+    @staticmethod
+    def recuperar_carrinho(usuario: str) -> list:
         conexao, cursor = Conexao.conectar()
-
         cursor.execute("""
-            SELECT carrinhos.cod_carrinho,
-                usuarios.usuario,
-                carrinhos.data,
-                carrinhos.finalizado,
-                produtos.produto,
-                itens_carrinho.quantidade,
-                produtos.preco,
-                produtos.foto
-            FROM carrinhos
-            INNER JOIN usuarios ON carrinhos.usuario = usuarios.usuario
-            INNER JOIN itens_carrinho ON carrinhos.cod_carrinho = itens_carrinho.cod_carrinho
-            INNER JOIN produtos ON produtos.codigo = itens_carrinho.cod_produto
-        """)
-
-
-        produto = cursor.fetchall()
-
+            SELECT c.cod_carrinho, u.usuario, i.quantidade, p.produto, p.preco, p.foto
+            FROM carrinhos c
+            INNER JOIN usuarios u ON c.usuario = u.usuario
+            INNER JOIN itens_carrinho i ON c.cod_carrinho = i.cod_carrinho
+            INNER JOIN produtos p ON p.codigo = i.cod_produto
+            WHERE u.usuario = %s AND c.finalizado = 0
+        """, [usuario])
+        produtos = cursor.fetchall()
         conexao.close()
+        return produtos
 
-        return produto
-    
+    @staticmethod
     def adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
         try:
             conexao, cursor = Conexao.conectar()
-
             cursor.execute("""
-
                 INSERT INTO itens_carrinho (cod_produto, cod_carrinho, quantidade) 
                 VALUES (%s, %s, %s);
-                """, [cod_produto, cod_carrinho, quantidade])
+            """, [cod_produto, cod_carrinho, quantidade])
             conexao.commit()
             conexao.close()
             return True        
@@ -44,26 +31,37 @@ class Carrinho():
             print(erro)
             return False
         
-    def verificar_carrinho_existente(cod_carrinho:int):
-        conexao, cursor = Conexao.conectar()
-        cursor.execute('SELECT cod_carrinho, usuario, finalizado disponibilidade FROM carrinhos')
-        carrinho = cursor.fetchone()
-        return carrinho
-
-        
-    def criar_carrinho_novo(usuario:str, finalizado:bool):
-        
+    @staticmethod
+    def verificar_carrinho_aberto(usuario: str):
         try:
-            conexao,cursor = Conexao.conectar()
-            cursor.execute("""
-                INSERT INTO carrinhos(usuario,finalizado)
-                        VALUES(%s,%s)
-            """, [usuario, finalizado])
-            conexao.commit()
+            conexao, cursor = Conexao.conectar()
+            cursor.execute('SELECT cod_carrinho FROM carrinhos WHERE usuario = %s AND finalizado = 0 LIMIT 1', [usuario])
+            carrinho = cursor.fetchone()
             conexao.close()
-            return True
-        
+            
+            if carrinho:
+                # retorna o primeiro item da lista que no caso é o codigo
+                return carrinho[0] 
+            return None
         except Exception as erro:
-            print(erro)
+            print(f"Erro no banco: {erro}")
+            return None
+
+
+    @staticmethod
+    def criar_carrinho_novo(usuario: str):
+        conexao = None
+        try:
+            conexao, cursor = Conexao.conectar()
+            cursor.execute("INSERT INTO carrinhos(usuario, finalizado) VALUES(%s, 0)", [usuario])
+            conexao.commit()
+            id_carrinho = cursor.lastrowid 
+            return id_carrinho
+        except Exception as erro:
+            print(f"Erro ao criar carrinho: {erro}")
             return False
-        
+        finally:
+            if conexao:
+                conexao.close()
+
+

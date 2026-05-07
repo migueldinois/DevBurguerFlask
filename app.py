@@ -48,31 +48,39 @@ def logar():
         print("Usuario ou senha incorretos")
         return redirect("/login")
     
-@app.route("/api/get/carrinho", methods =["GET"])
+@app.route("/api/get/carrinho", methods=["GET"])
 def api_get_carrinho():
     if "usuario_logado" in session:
-
         login = session["usuario_logado"]["usuario"]
-
+        # Pegando o carrinoh e mandando com json
         carrinho = Carrinho.recuperar_carrinho(login)
         return jsonify(carrinho), 200
     else:
         return jsonify({"error": "Usuário não logado"}), 401
-    
 
-@app.route("/api/post/carrinho/<cod_produto>/<cod_carrinho>/<quantidade>")
-def api_adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
+@app.route("/api/post/carrinho", methods=["POST"])
+def api_adicionar_item_carrinho():
     if "usuario_logado" in session:
-        login = session["usuario_logado"]["usuario"]
-        if Carrinho.verificar_carrinho_existente(cod_carrinho):
-            if Carrinho.adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
-                print("Deu certo para adicionar item")
-                return redirect("/")
-        else:
-            if Carrinho.criar_carrinho_novo(login):
-                print("Deu certo para criar carrinho")
-                return redirect("/")
+        dados = request.get_json()
+        cod_produto = dados.get("cod_produto")
+        quantidade = dados.get("quantidade")
         
+        login = session["usuario_logado"]["usuario"]
+        
+        cod_carrinho = Carrinho.verificar_carrinho_aberto(login)
+        # Se nao tiver codigo carrinho, cria um novo
+        if not cod_carrinho:
+            cod_carrinho = Carrinho.criar_carrinho_novo(login)
+            
+        # Aidiconando
+        if cod_carrinho and Carrinho.adicionar_item_carrinho(cod_produto, cod_carrinho, quantidade):
+            return redirect("/")
+        
+        return "Erro ao processar carrinho", 500
+    else:
+        return redirect("/login")
+
+
 
 
 if __name__ == '__main__':

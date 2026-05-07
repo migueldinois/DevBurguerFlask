@@ -6,3 +6,5 @@ INSERT INTO produtos (produto, descricao, preco, destaque, foto, disponibilidade
 
 INSERT INTO itens_carrinho (cod_carrinho, cod_produto, quantidade) 
 VALUES (1, 1, 1);
+
+INSERT INTO carrinhos(usuario,finalizado)VALUES('patofivem2@gmail.com', 1)
