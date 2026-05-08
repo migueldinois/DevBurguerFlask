@@ -49,7 +49,7 @@
         {% for destaque in destaques %}
         <div class="category-item">
           <img src="{{ destaque.foto }}" alt="{{ destaque.produto }}" class="category-item__img" />
-          <button onclick="adicionarItemCarrinho({{destaque.cod_produto}})" class="button button--small">EU
+          <button onclick="adicionarItemCarrinho({{destaque.codigo}})" class="button button--small">EU
             QUERO</button>
         </div>
         {% endfor %}

@@ -13,6 +13,8 @@ def pagina_principal():
     destaques = Produtos.recuperar_destaques()
     return render_template("index.html", produtos = produtos, destaques = destaques)
 
+
+
 @app.route('/detalhes_produto/<codigo>')
 def layout(codigo):
     produto = Produtos.detalhes_produto(codigo)
@@ -83,6 +85,23 @@ def api_adicionar_item_carrinho():
 
 
 
+@app.route("/api/delete/carrinho", methods=["DELETE"])
+def api_deletar_item_carrinho():
+    if "usuario_logado" in session:
+        dados = request.get_json()
+        cod_item_carrinho = dados.get("cod_item_carrinho")
+        
+        login = session["usuario_logado"]["usuario"]
+
+        cod_carrinho = Carrinho.verificar_carrinho_aberto(login)
+                
+        #  se esxister carrinho e o codigo do carrinho for true, entao deleta o item do carrinho
+        if cod_carrinho and Carrinho.deletar_item_carrinho(cod_item_carrinho, cod_carrinho):
+            return jsonify({"message":"Deletado com sucesso"}), 200
+        
+        return "Erro ao processar carrinho", 500
+    else:
+        return redirect("/login")
 
 if __name__ == '__main__':
     app.run(debug=True) 

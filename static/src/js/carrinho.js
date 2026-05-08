@@ -47,6 +47,7 @@ async function mostrar_carrinho() {
     let total = 0;
 
     for (let item of dadosCarrinho) {
+      console.log(item)
       total += item.preco;
       let linha = `
           <div class="cart-item">
@@ -56,8 +57,8 @@ async function mostrar_carrinho() {
               <h3 class="cart-item__name">${item.produto}</h3>
               <p class="cart-item__price">R$ ${item.preco.toFixed(2)}</p>
             </div>
-
-            <button class="cart-item__remove" aria-label="Remover ${item.produto}">
+        
+            <button onclick="deletarItemCarrinho(${item.cod_carrinho})" class="cart-item__remove" aria-label="Remover ${item.produto}">
               ✕
             </button>
           </div>`
@@ -70,7 +71,7 @@ async function mostrar_carrinho() {
   }
 }
 
-async function adicionarItemCarrinho(cod_produto, quantidade){
+async function adicionarItemCarrinho(cod_produto, quantidade=1){
   const resposta = await fetch('/api/post/carrinho', 
                         {
                           method: "POST",
@@ -94,8 +95,30 @@ async function adicionarItemCarrinho(cod_produto, quantidade){
       
   }
 }
-euQueroBotao.addEventListener('click', () =>{
 
-})
+async function deletarItemCarrinho(cod_item_carrinho){
+  const resposta = await fetch('/api/delete/carrinho', 
+                        {
+                          method: "DELETE",
+                          headers:{
+                                      "Content-Type": "application/json"
+                          },
+                          body: JSON.stringify(
+                                                {
+                                                  "cod_carrinho": cod_item_carrinho
+                                                }
+                          )
+                        }
+
+  )
+  if(!resposta.ok){
+    alert("Erro ao deletar item do carrinho")
+  } else {
+    mostrar_carrinho();
+  }
+}
+
+
+
 
 mostrar_carrinho();
